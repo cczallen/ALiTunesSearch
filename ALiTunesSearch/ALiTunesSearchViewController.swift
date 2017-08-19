@@ -60,8 +60,12 @@ class ALiTunesSearchViewController: UITableViewController {
         
         let url: URL = URL(string: "https://itunes.apple.com/search?term=\(actualKeyword!)&limit=25&entity=movie")!
         
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        
         URLSession.shared.dataTask(with: url) { (data: Data?, response: URLResponse?, error: Error?) in
             OperationQueue.main.addOperation {
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                
                 let json: JSON = JSON(data: data!)
                 self.datas = json["results"].arrayObject!
                 self.tableView.reloadData()
