@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		973068AC1F4DD6990076C910 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973068AB1F4DD6990076C910 /* ApiManager.swift */; };
 		97ACB1A61F4729DB001943B1 /* TrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97ACB1A51F4729DB001943B1 /* TrackCell.swift */; };
 		97E3E1531F41F5A8007878FE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E3E1521F41F5A8007878FE /* AppDelegate.swift */; };
 		97E3E1581F41F5A8007878FE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97E3E1561F41F5A8007878FE /* Main.storyboard */; };
@@ -18,6 +19,7 @@
 
 /* Begin PBXFileReference section */
 		7C6132FD8D1B146D4BEDE026 /* Pods-ALiTunesSearch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ALiTunesSearch.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ALiTunesSearch/Pods-ALiTunesSearch.debug.xcconfig"; sourceTree = "<group>"; };
+		973068AB1F4DD6990076C910 /* ApiManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
 		97ACB1A51F4729DB001943B1 /* TrackCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackCell.swift; sourceTree = "<group>"; };
 		97E3E14F1F41F5A8007878FE /* ALiTunesSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ALiTunesSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		97E3E1521F41F5A8007878FE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -83,6 +85,7 @@
 				97E3E1521F41F5A8007878FE /* AppDelegate.swift */,
 				97E3E1641F41F65F007878FE /* ALiTunesSearchViewController.swift */,
 				97ACB1A51F4729DB001943B1 /* TrackCell.swift */,
+				973068AB1F4DD6990076C910 /* ApiManager.swift */,
 				97E3E1561F41F5A8007878FE /* Main.storyboard */,
 				97E3E1591F41F5A8007878FE /* Assets.xcassets */,
 				97E3E15B1F41F5A8007878FE /* LaunchScreen.storyboard */,
@@ -215,6 +218,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				973068AC1F4DD6990076C910 /* ApiManager.swift in Sources */,
 				97E3E1531F41F5A8007878FE /* AppDelegate.swift in Sources */,
 				97E3E1651F41F65F007878FE /* ALiTunesSearchViewController.swift in Sources */,
 				97ACB1A61F4729DB001943B1 /* TrackCell.swift in Sources */,

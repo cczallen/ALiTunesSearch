@@ -37,15 +37,26 @@ class ALiTunesSearchViewController: UITableViewController {
     
     @IBOutlet weak var searchBar: UISearchBar!
     var datas: Array<Any> = []
+    var dataTask: URLSessionDataTask?
+
+    
+    
+    // MARK: - Override
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.hidesBarsOnSwipe = true
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyle.none
         query(keyword: "hobbit")
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override public var preferredStatusBarStyle: UIStatusBarStyle {
+        return UIStatusBarStyle.lightContent
     }
 
     
@@ -57,20 +68,28 @@ class ALiTunesSearchViewController: UITableViewController {
             return
         }
         let actualKeyword = keyword?.replacingOccurrences(of: " ", with: "+").urlEncoded()
+        let urlString = "https://itunes.apple.com/search?term=\(actualKeyword!)&limit=35&entity=movie"
         
-        let url: URL = URL(string: "https://itunes.apple.com/search?term=\(actualKeyword!)&limit=25&entity=movie")!
+        if self.dataTask?.state != URLSessionTask.State.completed {
+            self.dataTask?.cancel()
+        }
         
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
-        URLSession.shared.dataTask(with: url) { (data: Data?, response: URLResponse?, error: Error?) in
-            OperationQueue.main.addOperation {
+        self.dataTask = ApiManager.GET(urlString: urlString) { (data: Data?, response: URLResponse?, error: Error?) in
+            
+            if let theData = data {
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
                 
-                let json: JSON = JSON(data: data!)
+                let json: JSON = JSON(data: theData)
                 self.datas = json["results"].arrayObject!
-                self.tableView.reloadData()
+                
+            } else {
+                self.datas = []
             }
-            }.resume()
+            
+            self.tableView.reloadData()
+        }
     }
     
     func resignSearchBar() {
@@ -86,7 +105,7 @@ class ALiTunesSearchViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
+        return 180
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -108,20 +127,28 @@ class ALiTunesSearchViewController: UITableViewController {
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
     
+    
+
+    // MARK: - UIScrollViewDelegate
+
     override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         self.resignSearchBar()
     }
+    
+//    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        self.setNeedsStatusBarAppearanceUpdate()
+//    }
 
     
     
     // MARK: - UISearchBarDelegate
     
-    public func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         self.query(keyword: searchBar.text)
         self.resignSearchBar()
     }
     
-    public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         self.query(keyword: searchBar.text)
     }
 }

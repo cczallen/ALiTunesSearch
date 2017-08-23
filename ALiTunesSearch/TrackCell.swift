@@ -14,7 +14,11 @@ class TrackCell: UITableViewCell {
     
     @IBOutlet weak var trackTmageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var genreLabel: UILabel!
     @IBOutlet weak var yearLabel: UILabel!
+    @IBOutlet weak var directorLabel: UILabel!
+    
+    var dataTask: URLSessionDataTask?
     
     
     
@@ -27,17 +31,26 @@ class TrackCell: UITableViewCell {
         let releaseDate: String = data["releaseDate"] as! String
         let year = releaseDate.components(separatedBy: "-").first
         self.yearLabel.text = year
+        let genre: String = data["primaryGenreName"] as! String
+        self.genreLabel.text = genre
+        let director: String = data["artistName"] as! String
+        self.directorLabel.text = director
+        
+        
+        var urlString = data["artworkUrl100"] as! String
+        urlString = urlString.replacingOccurrences(of: "100x100", with: "600x600")
+        
+        if self.dataTask?.state != URLSessionTask.State.completed {
+            self.dataTask?.cancel()
+        }
         
         self.trackTmageView.image = UIImage.init(named: "imagePlaceholder")
-        
-        let url: URL = URL(string: data["artworkUrl100"] as! String)!
-        URLSession.shared.dataTask(with: url) { (imageData: Data?, response: URLResponse?, error: Error?) in
-            if imageData != nil {
-                OperationQueue.main.addOperation {
-                    self.trackTmageView.image = UIImage.init(data: imageData!)
-                }
+
+        self.dataTask = ApiManager.GETImage(urlString: urlString) { (image: UIImage?) in
+            if image != nil {
+                self.trackTmageView.image = image
             }
-            }.resume()
+        }
     }
     
     
@@ -47,6 +60,7 @@ class TrackCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        self.selectionStyle = UITableViewCellSelectionStyle.none
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
