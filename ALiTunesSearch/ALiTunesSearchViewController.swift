@@ -88,7 +88,7 @@ class ALiTunesSearchViewController: UITableViewController {
                 self.datas = []
             }
             
-            self.tableView.reloadData()
+            self.tableView.reloadSections(IndexSet.init(integer: 0), with: UITableViewRowAnimation.automatic)
         }
     }
     
